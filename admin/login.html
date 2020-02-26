@@ -84,7 +84,8 @@
                 //如果客户端返回的是200,把token保存到浏览器本地存储里面,如果400提示用户登录错误
                 if (response.code === 200) {
                   //存进本地存储
-                  localStorage.setItem("token", JSON.stringify(response.token));
+                  localStorage.setItem("token",response.token);
+          
                   //跳转到首页
                   location.href = "./index.html";
                 } else {
