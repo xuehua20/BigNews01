@@ -1,43 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>大事件-后台登录页</title>
+    <link rel="stylesheet" type="text/css" href="css/reset.css" />
+    <link rel="stylesheet" type="text/css" href="css/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="css/main.css" />
+    <!-- 引入bootstrap的css文件 -->
+    <link rel="stylesheet" href="./libs/bootstrap/css/bootstrap.min.css" />
+    <!-- 引入jq文件 -->
+    <script src="./libs/jquery-1.12.4.min.js"></script>
+    <!-- 引入bootstrap的js文件 -->
+    <script src="./libs/bootstrap/js/bootstrap.min.js"></script>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-  <title>大事件-后台登录页</title>
-  <link rel="stylesheet" type="text/css" href="css/reset.css" />
-  <link rel="stylesheet" type="text/css" href="css/iconfont.css" />
-  <link rel="stylesheet" type="text/css" href="css/main.css" />
-  <!-- 引入bootstrap的css文件 -->
-  <link rel="stylesheet" href="./libs/bootstrap/css/bootstrap.min.css" />
-  <!-- 引入jq文件 -->
-  <script src="./libs/jquery-1.12.4.min.js"></script>
-  <!-- 引入bootstrap的js文件 -->
-  <script src="./libs/bootstrap/js/bootstrap.min.js"></script>
-</head>
+  <body>
+    <div class="main_wrap">
+      <div class="header">
+        <a href="#" class="logo"><img src="images/logo.png" alt=""/></a>
+        <div class="copyright">
+          CopyRight © 2019 深圳百秀信息技术股份有限公司<br />All Rights Reserved
+        </div>
+      </div>
 
-<body>
-  <div class="main_wrap">
-    <div class="header">
-      <a href="#" class="logo"><img src="images/logo.png" alt="" /></a>
-      <div class="copyright">
-        CopyRight © 2019 深圳百秀信息技术股份有限公司<br />All Rights Reserved
+      <div class="login_form_con">
+        <div class="login_title"></div>
+
+        <form class="login_form">
+          <i class="iconfont icon-user"></i>
+          <i class="iconfont icon-key"></i>
+          <input type="text" class="input_txt" placeholder="邮箱/手机号" />
+          <input type="password" class="input_pass" placeholder="密码" />
+          <input type="submit" class="input_sub" value="登 录" />
+        </form>
       </div>
     </div>
-
-    <div class="login_form_con">
-      <div class="login_title"></div>
-      <form class="login_form">
-        <i class="iconfont icon-user"></i>
-        <i class="iconfont icon-key"></i>
-        <input type="text" class="input_txt" placeholder="邮箱/手机号" />
-        <input type="password" class="input_pass" placeholder="密码" />
-        <input type="submit" class="input_sub" value="登 录" />
-      </form>
-    </div>
-  </div>
-
-</body>
-
+    <!-- 模态框弹窗 -->
+    <div class="modal fade" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">温馨提示</h4>
+          </div>
+          <div class="modal-body">
+            <p>老弟,用户名或密码不能为空哦!</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+    
+          </div>
+    <script>
+      $(function() {
+        $(".input_sub").click(function(e) {
+          //阻止默认提交
+          e.preventDefault();
+          //.获取用户输入的用户名和密码
+          let usertext = $(".input_txt")
+            .val()
+            .trim();
+          let pass = $(".input_pass")
+            .val()
+            .trim();
+          //判断非空
+          if (usertext === "" || pass === "") {
+            
+            $(".modal").modal();
+            return;
+          
+          } else {
+            $.ajax({
+              type: "post",
+              url: "http://localhost:8080/api/v1/admin/user/login",
+              data: {
+                username: usertext,
+                password: pass
+              },
+              success: function(response) {
+                console.log(response);
+                //如果客户端返回的是200,把token保存到浏览器本地存储里面,如果400提示用户登录错误
+                if (response.code === 200) {
+                  //存进本地存储
+                  localStorage.setItem("token",response.token);
+          
+                  //跳转到首页
+                  location.href = "./index.html";
+                } else {
+                  $(".modal-body p").html(response.msg);
+                  $(".modal").modal();
+                }
+              }
+            });
+          }
+        });
+      });
+    </script>
+  </body>
 </html>
