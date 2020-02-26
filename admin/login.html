@@ -27,6 +27,7 @@
 
       <div class="login_form_con">
         <div class="login_title"></div>
+
         <form class="login_form">
           <i class="iconfont icon-user"></i>
           <i class="iconfont icon-key"></i>
@@ -36,6 +37,22 @@
         </form>
       </div>
     </div>
+    <!-- 模态框弹窗 -->
+    <div class="modal fade" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">温馨提示</h4>
+          </div>
+          <div class="modal-body">
+            <p>老弟,用户名或密码不能为空哦!</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+    
+          </div>
     <script>
       $(function() {
         $(".input_sub").click(function(e) {
@@ -49,15 +66,11 @@
             .val()
             .trim();
           //判断非空
-          if (usertext === "" && pass === "") {
-            alert("老弟,用户名和密码不能为空哦!");
+          if (usertext === "" || pass === "") {
+            
+            $(".modal").modal();
             return;
-          } else if (usertext === "") {
-            alert("老弟,用户名不能为空");
-            return;
-          } else if (pass === "") {
-            alert("密码不能为空哦");
-            return;
+          
           } else {
             $.ajax({
               type: "post",
@@ -68,6 +81,16 @@
               },
               success: function(response) {
                 console.log(response);
+                //如果客户端返回的是200,把token保存到浏览器本地存储里面,如果400提示用户登录错误
+                if (response.code === 200) {
+                  //存进本地存储
+                  localStorage.setItem("token", JSON.stringify(response.token));
+                  //跳转到首页
+                  location.href = "./index.html";
+                } else {
+                  $(".modal-body p").html(response.msg);
+                  $(".modal").modal();
+                }
               }
             });
           }
