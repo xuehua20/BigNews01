@@ -57,5 +57,4 @@
   };
   //把BigNews变成全局变量,好方便调用
   _w.BigNews = BigNews;
-  console.log(BigNews.user_info);
 })(window);
