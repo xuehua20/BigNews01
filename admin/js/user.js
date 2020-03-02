@@ -29,7 +29,7 @@ $(function() {
   });
   //功能3 修改了用户信息
 
-  $(".btn").click(function(e) {
+  $(".btn-edit").click(function(e) {
     e.preventDefault(); //3.1阻止默认行为
     //FormData 可以把它看做是特殊的参数的数据格式,可用于图片上传, 它传输的图片都是自动转换为二进制进行传输的
     //可以把表单域序列化 new FormData(表单域)
@@ -41,12 +41,14 @@ $(function() {
     // console.log(document.forms[0]);
     // console.log(document.forms[0]);
     // const fd = new FormData(document.forms[0]);
-    // console.log(fd.get("username"));
+    console.log(fd.get("username"));
+    console.log(fd.get("nickname"));
+    console.log(fd.get("email"));
+    console.log(fd.get("email"));
     $.ajax({
       type: "post",
       url: BigNews.user_edit,
       data: fd,
-      dataType: "json",
       //jq这个方法默认会加请求头和转换为字符串.而我们fd是特殊数据不需要这样,所以需要把下面两个属性改为 false
       contentType: false, //取消默认请求头
       processData: false, //取消转换字符串

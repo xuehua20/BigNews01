@@ -7,10 +7,10 @@ $(function() {
     // },
     dataType: "json",
     success: function(response) {
-      console.log(response);
+      // console.log(response);
       //渲染上页面
       $(".user_info span strong").text(response.data.nickname);
-      console.log(response.data.userPic);
+      // console.log(response.data.userPic);
 
       $(".user_info  img").attr({ src: response.data.userPic });
       // 右侧头像

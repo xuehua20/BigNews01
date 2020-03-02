@@ -10,16 +10,26 @@
     beforeSend: function() {
       //发送请求前
     },
-    error: function() {
+    error: function(xhr) {
       //发送失败
-      //向服务器发送请求失败时.提醒用户登录失败,并继续在登录页
-      $(".modal").modal();
-      $(".modal-body p").html("登录失败,请重新登录");
-      $(".btn").html("确认");
-      //点完确认后跳转回登录页面
-      $(".btn").click(function() {
-        location.href = "./login.html";
-      });
+      console.log(xhr);
+      if (xhr.status === 400) {
+        $("#myModal1").modal();
+        $("#myModal1 .modal-body").html("数据有误,请重新输入");
+        $("#myModal1 .btn").html("确认");
+        $("#myModal3").modal("hide");
+
+        return;
+      } else if (xhr.status === 403) {
+        //向服务器发送请求失败时.提醒用户登录失败, 并继续在登录页;
+        $("#myModal1").modal();
+        $("#myModal1 .modal-body").html("登录失败,请重新登录");
+        $("#myModal1 .btn").html("确认");
+        // 点完确认后跳转回登录页面;
+        $("#myModal1 .btn").click(function() {
+          location.href = "./login.html";
+        });
+      }
     },
     complete: function() {
       //发送完成
