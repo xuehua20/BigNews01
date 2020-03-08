@@ -12,10 +12,12 @@
     <script src="./libs/jquery-1.12.4.min.js"></script>
     <!-- 图表统计的引入 -->
     <script type="text/javascript" src="./libs/echarts.js"></script>
+    <!-- 模板字符引入 -->
+    <script src="./libs/template-web.js"></script>
   </head>
 
   <body>
-    <div class="container-fluid">
+    <div class="container-fluid1">
       <div class="row spannel_list">
         <div class="col-sm-3 col-xs-6">
           <div class="spannel">
@@ -58,6 +60,34 @@
     <div class="container-fluid">
       <div class="column_pannel" id="column_show"></div>
     </div>
+    <script id="info" type="text/html">
+      <div class="row spannel_list">
+         <div class="col-sm-3 col-xs-6">
+           <div class="spannel">
+             <em>{{totalArticle}}</em><span>篇</span>
+             <b>总文章数</b>
+           </div>
+         </div>
+         <div class="col-sm-3 col-xs-6">
+           <div class="spannel scolor01">
+             <em>{{dayArticle}}</em><span>篇</span>
+             <b>日新增文章数</b>
+           </div>
+         </div>
+         <div class="col-sm-3 col-xs-6">
+           <div class="spannel scolor02">
+             <em>{{totalComment}}</em><span>条</span>
+             <b>评论总数</b>
+           </div>
+         </div>
+         <div class="col-sm-3 col-xs-6">
+           <div class="spannel scolor03">
+             <em>{{dayComment}}</em><span>条</span>
+             <b>日新增评论数</b>
+           </div>
+         </div>
+       </div>
+    </script>
 
     <!-- 折线图 -->
     <script>
@@ -82,7 +112,7 @@
     </script>
 
     <!-- 环形图 -->
-    <script>
+    <!-- <script>
       // 基于准备好的dom，初始化echarts实例
       var myChart1 = echarts.init(document.getElementById("pie_show"));
 
@@ -129,7 +159,7 @@
       };
       // 使用刚指定的配置项和数据显示图表。
       myChart1.setOption(option1);
-    </script>
+    </script> -->
     <!-- 柱状图 -->
     <script>
       // 基于准备好的dom，初始化echarts实例
