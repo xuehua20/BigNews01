@@ -57,6 +57,7 @@ $(function() {
         console.log(response);
         if (response.code === 200) {
           //更新成功后获取当前页面的头像
+          alert("修改成功");
           let userImg = $("img.user_pic").attr("src");
 
           let username = $(".nickname").val();
