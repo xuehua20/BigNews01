@@ -345,5 +345,25 @@
         </li>
         {{/each}}
     </script>
+    <script id="attention" type="text/html">
+      {{each data}}
+       <li><a href="#">{{$value.intro}}</a></li>
+        {{/each}}
+    </script>
+    <script id="hotpic" type="text/html">
+      {{each data}}
+      {{if $index===0}}
+       <li class="first" data-id='{{$value.id}}'>
+            <a href="#"><img src={{$value.cover}} alt=""/></a>
+            <p>{{$value.title}}</p>
+          </li>
+          {{else if $index+1}}
+          <li  data-id='{{$value.id}}'>
+            <a href="#"><img src={{$value.cover}} alt=""/></a>
+            <p>{{$value.title}}</p>
+          </li>
+          {{/if}}
+        {{/each}}
+    </script>
   </body>
 </html>

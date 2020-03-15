@@ -15,8 +15,6 @@ $(function() {
     type: "get",
     url: BigNews.rank,
     success: function(response) {
-      console.log(response);
-
       let htmlstr = template("artitlerank", response);
       console.log(htmlstr);
 
@@ -29,9 +27,35 @@ $(function() {
     url: BigNews.latest_comment,
 
     success: function(response) {
-      console.log(response);
       let htmlstr = template("commentlist", response);
       $(".comment_list").html(htmlstr);
     }
   });
+  //焦点关注
+  $.ajax({
+    type: "get",
+    url: BigNews.attention,
+
+    success: function(response) {
+      let htmlstr = template("attention", response);
+      $(".guanzhu_list").html(htmlstr);
+    }
+  });
+  function ajaxdata(url, strid, select) {
+    $.ajax({
+      type: "get",
+      url: url,
+
+      success: function(response) {
+        console.log(response);
+        let htmlstr = template(strid, response);
+        $(select).html(htmlstr);
+      }
+    });
+  }
+  // debugger;
+  // //最新资讯
+  // ajaxdata(BigNews.latest, "latest", ".common_news");
+  //热点图
+  ajaxdata(BigNews.hotpic, "hotpic", ".focus_list");
 });
